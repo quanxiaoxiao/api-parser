@@ -5,6 +5,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quanxiaoxiao/api-parser.git"
+  },
   "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "dependencies": {
     "path-to-regexp": "^5.0.0"
