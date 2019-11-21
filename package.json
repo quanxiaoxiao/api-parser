@@ -1,16 +1,23 @@
 {
-  "name": "api-parser",
-  "version": "0.0.1",
+  "name": "@quanxiaoxiao/api-parser",
+  "version": "0.0.2",
   "description": "",
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "ava"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/quanxiaoxiao/api-parser.git"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "dependencies": {
+    "lodash": "^4.17.15",
     "path-to-regexp": "^5.0.0"
   },
   "devDependencies": {
