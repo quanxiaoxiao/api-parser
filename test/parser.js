@@ -1,6 +1,8 @@
 import test from 'ava';
 import parser from '../src/parser';
 
+const METHOD_COUNT = 5;
+
 test('is not plain obj', (t) => {
   t.throws(() => {
     parser([]);
@@ -11,19 +13,29 @@ test('is not plain obj', (t) => {
 test('check pathname', (t) => {
   const apis = parser({
     '/': {
-      body: {},
+      get: {
+        body: {},
+      },
     },
     '': {
-      body: {},
+      get: {
+        body: {},
+      },
     },
     '/a': {
-      body: {},
+      get: {
+        body: {},
+      },
     },
     '/b': {
-      body: {},
+      get: {
+        body: {},
+      },
     },
     '/c': {
-      body: {},
+      get: {
+        body: {},
+      },
     },
     d: {
       body: {},
@@ -106,12 +118,12 @@ test('check handle', (t) => {
   t.is(apis.find((api) => api.pathname === '/number'), undefined);
   t.is(apis.find((api) => api.pathname === '/null'), undefined);
   t.is(apis.find((api) => api.pathname === '/empty'), undefined);
-  t.is(apis.filter((api) => api.pathname === '/').length, 1);
-  t.is(apis.filter((api) => api.pathname === '/foo').length, 1);
+  t.is(apis.filter((api) => api.pathname === '/').length, METHOD_COUNT);
+  t.is(apis.filter((api) => api.pathname === '/foo').length, METHOD_COUNT);
   t.is(apis.filter((api) => api.pathname === '/bar').length, 1);
   t.is(apis.filter((api) => api.pathname === '/get/post').length, 0);
   t.is(apis.filter((api) => api.pathname === '/get/post/2').length, 2);
-  t.is(apis.filter((api) => api.pathname === '/all').length, 1);
+  t.is(apis.filter((api) => api.pathname === '/all').length, METHOD_COUNT);
   t.deepEqual(apis.find((api) => api.pathname === '/'), { method: 'GET', pathname: '/', body: {} });
   t.deepEqual(apis.find((api) => api.pathname === '/get'), { method: 'GET', pathname: '/get', body: {} });
   t.deepEqual(apis.find((api) => api.pathname === '/post'), { method: 'POST', pathname: '/post', body: {} });
@@ -120,12 +132,25 @@ test('check handle', (t) => {
   t.deepEqual(apis.filter((api) => api.pathname === '/get/post/2')[1], { method: 'POST', pathname: '/get/post/2', body: {} });
 });
 
+test('all', (t) => {
+  const apis = parser({
+    '/fn': {
+      body: 'test',
+    },
+  });
+  t.is(apis.length, METHOD_COUNT);
+  t.is(apis.filter((item) => item.pathname === '/fn').length, METHOD_COUNT);
+  t.is(apis.filter((item) => item.method === 'GET').length, 1);
+  t.is(apis.filter((item) => item.method === 'POST').length, 1);
+  t.is(apis.filter((item) => item.method === 'PATCH').length, 1);
+  t.is(apis.filter((item) => item.method === 'PUT').length, 1);
+  t.is(apis.filter((item) => item.method === 'DELETE').length, 1);
+  t.is(apis.find((item) => item.method === 'DELETE').body, 'test');
+});
+
 test('check function', (t) => {
   const apis = parser({
     '/fn': () => {},
   });
-  t.is(apis.length, 1);
-  t.is(apis[0].method, '*');
-  t.is(apis[0].pathname, '/fn');
-  t.true(typeof apis[0].mount === 'function');
+  t.is(apis.length, 0);
 });

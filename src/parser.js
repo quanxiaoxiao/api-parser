@@ -3,20 +3,13 @@ const _ = require('lodash');
 const METHODS = ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'];
 
 const generateHandler = (pathname, obj) => {
-  if (typeof obj === 'function') {
-    return [{
-      method: '*',
-      pathname,
-      mount: obj,
-    }];
-  }
   const keys = Object.keys(obj);
   if (keys.length === 1 && !METHODS.includes(keys[0].toUpperCase())) {
-    return [{
-      method: 'GET',
+    return METHODS.map((method) => ({
+      method,
       pathname,
       ...obj,
-    }];
+    }));
   }
 
   return keys
@@ -50,9 +43,6 @@ module.exports = (obj) => {
       if (!/^\/.*/.test(pathname)) {
         console.log(`pathname: '${pathname}' invalid`);
         return false;
-      }
-      if (typeof obj[pathname] === 'function') {
-        return true;
       }
       if (!_.isPlainObject(obj[pathname])) {
         console.log(`pathname: '${pathname}', cant handle`);
