@@ -119,3 +119,13 @@ test('check handle', (t) => {
   t.deepEqual(apis.filter((api) => api.pathname === '/get/post/2')[0], { method: 'GET', pathname: '/get/post/2', body: {} });
   t.deepEqual(apis.filter((api) => api.pathname === '/get/post/2')[1], { method: 'POST', pathname: '/get/post/2', body: {} });
 });
+
+test('check function', (t) => {
+  const apis = parser({
+    '/fn': () => {},
+  });
+  t.is(apis.length, 1);
+  t.is(apis[0].method, '*');
+  t.is(apis[0].pathname, '/fn');
+  t.true(typeof apis[0].mount === 'function');
+});
