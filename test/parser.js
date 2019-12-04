@@ -148,9 +148,14 @@ test('all', (t) => {
   t.is(apis.find((item) => item.method === 'DELETE').body, 'test');
 });
 
+
 test('check function', (t) => {
   const apis = parser({
-    '/fn': () => {},
+    '/fn/1': () => {},
+    '/fn/2': {
+      get: () => {},
+    },
   });
-  t.is(apis.length, 0);
+  t.is(apis.length, METHOD_COUNT + 1);
+  t.true(apis.every((api) => typeof api.mount === 'function'));
 });
