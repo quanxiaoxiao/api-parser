@@ -15,20 +15,20 @@ const generateHandler = (pathname, obj) => {
   return keys
     .filter((method) => {
       if (!METHODS.includes(method.toUpperCase())) {
-        console.log(`pathname: '${pathname}' method: ${method} invalid`);
+        console.log(`pathname: \`${pathname}\` method: \`${method}\`, invalid`);
         return false;
       }
       if (_.isFunction(obj[method])) {
         return true;
       }
       if (_.isEmpty(obj[method])) {
-        console.log(`pathname: '${pathname}' handler is empty`);
+        console.log(`pathname: \`${pathname}\`, handler is empty`);
         return false;
       }
       if (_.isPlainObject(obj[method]) && Object.keys(obj[method]).length === 1) {
         return true;
       }
-      console.log(`pathname: '${pathname}' method: ${method} handler is invalid`);
+      console.log(`pathname: \`${pathname}\` method: \`${method}\`, handler is invalid`);
       return false;
     })
     .map((method) => ({
@@ -46,11 +46,11 @@ module.exports = (obj) => {
     .keys(obj)
     .filter((pathname) => {
       if (!/^\/.*/.test(pathname)) {
-        console.log(`pathname: '${pathname}' invalid`);
+        console.log(`pathname: \`${pathname}\`, invalid`);
         return false;
       }
       if (!_.isPlainObject(obj[pathname]) && !_.isFunction(obj[pathname])) {
-        console.log(`pathname: '${pathname}', cant handle`);
+        console.log(`pathname: \`${pathname}\`, cant handle`);
         return false;
       }
       return true;
