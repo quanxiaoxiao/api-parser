@@ -1,14 +1,13 @@
-import test from 'ava';
-import parser from '../src/parser';
+import test from 'ava'; // eslint-disable-line import/no-unresolved
+import parser from '../src/index.mjs';
 
 const METHOD_COUNT = 5;
 
 test('is not plain obj', (t) => {
   t.throws(() => {
     parser([]);
-  }, Error);
+  });
 });
-
 
 test('check pathname', (t) => {
   const apis = parser({
@@ -147,7 +146,6 @@ test('all', (t) => {
   t.is(apis.filter((item) => item.method === 'DELETE').length, 1);
   t.is(apis.find((item) => item.method === 'DELETE').body, 'test');
 });
-
 
 test('check function', (t) => {
   const apis = parser({
