@@ -1,15 +1,11 @@
 {
   "name": "@quanxiaoxiao/api-parser",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "",
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "exports": {
-    ".": {
-      "import": "./src/index.mjs"
-    }
-  },
+  "exports": "./src/index.mjs",
   "type": "module",
   "scripts": {
     "lint": "eslint src/* --ignore-path .gitignore",

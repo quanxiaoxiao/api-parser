@@ -67,6 +67,8 @@ const generateHandler = (pathname, value) => {
     }));
 };
 
+export { METHODS };
+
 export default (value) => {
   if (!isPlainObject(value)) {
     throw new Error('api config is not plain object');
